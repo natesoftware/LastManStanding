@@ -57,3 +57,9 @@ processResources {
         expand props
     }
 }
+
+jar {
+    archiveBaseName.set('LastManStanding')
+    archiveVersion.set('')
+    destinationDirectory.set(file('C:\\Users\\nateb\\Desktop\\LastManStanding server\\plugins'))
+}
