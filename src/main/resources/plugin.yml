@@ -1,0 +1,4 @@
+name: LastManStanding
+version: '1.0'
+main: me.natesoftware.lastManStanding.LastManStanding
+api-version: '1.21'
