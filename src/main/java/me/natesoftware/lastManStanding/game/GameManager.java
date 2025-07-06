@@ -6,12 +6,14 @@ import me.natesoftware.lastManStanding.player.PlayerState;
 import me.natesoftware.lastManStanding.util.MessageUtil;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GameManager {
 
@@ -102,7 +104,7 @@ public class GameManager {
         setupSpectators();
 
         // Announce game start
-        MessageUtil.broadcast("&a&lLET THE BATTLE BEGIN!");
+        MessageUtil.broadcast("&a&lGOOD LUCK!");
 
         // Start game monitoring task
         startGameMonitoring();
@@ -111,14 +113,14 @@ public class GameManager {
     }
 
     private void setupGamePlayers() {
-        Location spawnLocation = getSpawnLocation();
-
         for (Player player : activePlayers) {
             LMSPlayer lmsPlayer = plugin.getPlayerManager().getPlayer(player);
 
             // Set player state
             lmsPlayer.setPlayerState(PlayerState.PLAYING);
             lmsPlayer.resetGameStats();
+
+            Location spawnLocation = getSpawnLocation();
 
             // Setup player
             player.setGameMode(GameMode.SURVIVAL);
@@ -333,18 +335,29 @@ public class GameManager {
     }
 
     private Location getSpawnLocation() {
-        // Get spawn from config, fallback to world spawn
         try {
             String worldName = plugin.getConfigManager().getConfig().getString("world.arena-world", "world");
-            double x = plugin.getConfigManager().getConfig().getDouble("world.spawn.x", 0);
-            double y = plugin.getConfigManager().getConfig().getDouble("world.spawn.y", 64);
-            double z = plugin.getConfigManager().getConfig().getDouble("world.spawn.z", 0);
-            float yaw = (float) plugin.getConfigManager().getConfig().getDouble("world.spawn.yaw", 0);
-            float pitch = (float) plugin.getConfigManager().getConfig().getDouble("world.spawn.pitch", 0);
+            World world = plugin.getServer().getWorld(worldName);
+            if (world == null) throw new IllegalStateException("World not found: " + worldName);
 
-            return new Location(plugin.getServer().getWorld(worldName), x, y, z, yaw, pitch);
+            // Get bounds
+            int minX = plugin.getConfigManager().getConfig().getInt("world.spawn.min.x");
+            int maxX = plugin.getConfigManager().getConfig().getInt("world.spawn.max.x");
+            int minZ = plugin.getConfigManager().getConfig().getInt("world.spawn.min.z");
+            int maxZ = plugin.getConfigManager().getConfig().getInt("world.spawn.max.z");
+            int y = plugin.getConfigManager().getConfig().getInt("world.spawn.y", 64); // Optional fallback
+
+            // Random coordinates within bounds
+            int x = ThreadLocalRandom.current().nextInt(minX, maxX + 1);
+            int z = ThreadLocalRandom.current().nextInt(minZ, maxZ + 1);
+
+            // Use the highest Y at that location, or your custom Y if you're spawning underground
+            Location loc = new Location(world, x + 0.5, y, z + 0.5); // +0.5 to center player
+            loc.setY(world.getHighestBlockYAt(loc)); // Comment this out if you want fixed Y (like in caves)
+
+            return loc;
         } catch (Exception e) {
-            MessageUtil.logWarning("Failed to get spawn location from config, using world spawn");
+            MessageUtil.logWarning("Failed to get random spawn location from config, using world spawn");
             return plugin.getServer().getWorlds().get(0).getSpawnLocation();
         }
     }

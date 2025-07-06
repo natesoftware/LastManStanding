@@ -80,7 +80,7 @@ public class ConfigManager {
 
     // Message settings
     public String getPrefix() {
-        return config.getString("messages.prefix", "&6[LMS] &r");
+        return config.getString("messages.prefix", "&6&l[LMS] &r");
     }
 
     // Game settings setters (for host commands)

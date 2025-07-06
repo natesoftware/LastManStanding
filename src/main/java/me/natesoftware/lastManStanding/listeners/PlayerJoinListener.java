@@ -22,10 +22,6 @@ public class PlayerJoinListener implements Listener {
         // Add to queue
         plugin.getQueueManager().addToQueue(event.getPlayer());
 
-        // Send welcome message
-        MessageUtil.sendInfoMessage(event.getPlayer(),
-                "Welcome to LastManStanding! You've been added to the queue.");
-
         // Show current queue status
         int queueSize = plugin.getQueueManager().getQueueSize();
         int maxPlayers = plugin.getConfigManager().getMaxPlayers();
