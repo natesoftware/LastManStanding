@@ -1,0 +1,137 @@
+# LastManStanding Configuration
+# Plugin by NateSoftware
+
+# Game Settings
+game:
+  # Maximum number of players that can play at once
+  max-players: 10
+
+  # Minimum number of players required to start a game
+  min-players: 2
+
+  # Time in seconds before game starts after /lms start
+  countdown-time: 10
+
+  # Default game modifier (none, speed, strength, resistance)
+  default-modifier: "none"
+
+  # Maximum game duration in minutes (0 = unlimited)
+  max-duration: 30
+
+  # Teleport players back to spawn after game ends
+  teleport-after-game: true
+
+  # Clear player inventories when game starts
+  clear-inventories: true
+
+# World Settings
+world:
+  # World where the game takes place
+  arena-world: "world"
+
+  # World where players wait
+  waiting-world: "world"
+
+  # Spawn location for game start
+  spawn:
+    x: 0.0
+    y: 64.0
+    z: 0.0
+    yaw: 0.0
+    pitch: 0.0
+
+  # Waiting area location
+  waiting:
+    x: 0.0
+    y: 64.0
+    z: 0.0
+
+  # Mining phase location (if using phases)
+  mining:
+    x: 0.0
+    y: 64.0
+    z: 0.0
+
+# Phase Settings
+phases:
+  # Enable phase system (mining -> pvp -> endgame)
+  enabled: false
+
+  # Phase durations in seconds
+  durations:
+    mining: 300    # 5 minutes
+    pvp: 600       # 10 minutes
+    endgame: 180   # 3 minutes
+
+# Message Settings
+messages:
+  # Prefix for all plugin messages
+  prefix: "&6[LMS] &r"
+
+  # Custom messages
+  welcome: "Welcome to LastManStanding!"
+  game-start: "The battle begins!"
+  game-end: "Game over!"
+
+  # Death messages
+  death:
+    eliminated: "{player} has been eliminated!"
+    winner: "{player} is the Last Man Standing!"
+    no-winner: "Game ended with no winner!"
+
+# Item Settings
+items:
+  # Starting items for players
+  starting-items:
+    - "STONE_SWORD"
+    - "BREAD:16"
+    - "LEATHER_HELMET"
+    - "LEATHER_CHESTPLATE"
+    - "LEATHER_LEGGINGS"
+    - "LEATHER_BOOTS"
+
+  # Mining phase items
+  mining-items:
+    - "STONE_PICKAXE"
+    - "STONE_AXE"
+    - "STONE_SHOVEL"
+    - "BREAD:16"
+    - "PLANKS:32"
+    - "COBBLESTONE:32"
+
+# Special Abilities (for future custom items)
+abilities:
+  # Enable custom abilities
+  enabled: false
+
+  # Cooldown settings
+  cooldowns:
+    global: 30     # Global cooldown in seconds
+    per-ability: 60 # Per-ability cooldown in seconds
+
+# Database Settings (for statistics)
+database:
+  # Database type (sqlite, mysql, none)
+  type: "sqlite"
+
+  # SQLite file name
+  sqlite-file: "lastmanstanding.db"
+
+  # MySQL settings (if using mysql)
+  mysql:
+    host: "localhost"
+    port: 3306
+    database: "lastmanstanding"
+    username: "root"
+    password: "password"
+
+# Debug Settings
+debug:
+  # Enable debug logging
+  enabled: false
+
+  # Log player actions
+  log-actions: false
+
+  # Log game events
+  log-events: false

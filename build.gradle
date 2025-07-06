@@ -61,5 +61,5 @@ processResources {
 jar {
     archiveBaseName.set('LastManStanding')
     archiveVersion.set('')
-    destinationDirectory.set(file('C:\\Users\\nateb\\Desktop\\LastManStanding server\\plugins'))
+    destinationDirectory.set(file('C:\\Users\\nateb\\Desktop\\reloadmc test\\plugins'))
 }

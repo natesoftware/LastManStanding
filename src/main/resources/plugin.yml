@@ -2,3 +2,44 @@ name: LastManStanding
 version: '1.0'
 main: me.natesoftware.lastManStanding.LastManStanding
 api-version: '1.21'
+author: NateSoftware
+description: A competitive last man standing minigame plugin
+
+# Commands
+commands:
+  lms:
+    description: Main LastManStanding command
+    usage: /lms <subcommand>
+    aliases: [lastmanstanding, lms]
+    permission: lms.use
+    permission-message: You don't have permission to use this command!
+
+# Permissions
+permissions:
+  lms.*:
+    description: Full access to all LastManStanding commands
+    children:
+      lms.use: true
+      lms.host: true
+      lms.admin: true
+    default: op
+
+  lms.use:
+    description: Basic LastManStanding usage
+    default: true
+
+  lms.host:
+    description: Host games and change settings
+    default: op
+
+  lms.admin:
+    description: Administrative commands
+    default: op
+
+# Dependencies
+depend: []
+softdepend: []
+
+# Load order
+load: STARTUP
+loadbefore: []
